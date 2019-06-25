@@ -1,0 +1,1127 @@
+===================Simple Login=================
+
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using SimpleLogin.Models;
+namespace SimpleLogin.Controllers
+{
+    public class HomeController : Controller
+    {
+       
+        //
+        // GET: /Home/
+
+        public ActionResult Index()
+        {
+           
+            ViewBag.a = "Viewbag";
+            TempData["b"] = "Tempdata";
+            return View();
+        }
+        // [HttpPost]
+        //public ActionResult loginform(FormCollection collection)
+        //{
+        //    string email = collection.Get("email");
+        //    string Password1 = collection.Get("Password");
+        //    if (email == "rash" && Password1 == "1234")
+        //    {
+        //        Response.Redirect("http://localhost:55333/Home/loginform1");
+        //    }
+        //    else
+        //    {
+        //        ViewBag.Message = "enter valid Email ID and Password";
+             
+        //    }
+        //    return View("Index");
+        //}
+        //[HttpGet]
+        // public ActionResult loginform1()
+        // {
+        //     return View();
+        // }
+     [HttpPost]
+         public ActionResult loginform1(string Password, string email)
+         {
+             Class1 obj = new Class1();
+              obj.Name = email;
+              obj.Password = Password;
+              
+              ViewBag.My = obj.Name;
+              ViewBag.M = obj.Password;
+              if (obj.Name == "rash" && obj.Password == "1234")
+              {
+                 // Response.Redirect("http://localhost:55333/Home/loginform1");
+                  return View("loginform1");
+              }
+              else{
+                  ViewBag.Message = "enter valid Email ID and Password";
+                  return View("Index");
+              }
+             
+            
+            
+         }
+     [HttpGet]
+      public ActionResult loginform1()
+      {
+          
+          return View();
+      }
+    
+    }
+}
+  
+
+
+
+
+<h2>Index</h2>
+<!doctype html>
+<html>
+    <h2> @ViewBag.a </h2>
+
+         <h2>@{TempData.Keep("b");}</h2>
+<head><title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+  @*<script src="/scripts/jquery-1.3.2.js" type="text/javascript"></script>*@
+    <script src="~/Content/login/js/jquery-2.1.4.min.js"></script>
+    @if (ViewBag.Message != null)
+    {
+        <script>
+
+            $(document).ready(function () {
+              
+                alert('@ViewBag.Message')
+
+            });
+
+        </script>
+
+    }
+</head>
+<body>
+    <h2>Sign In</h2>
+          @using (Html.BeginForm("loginform1", "Home", FormMethod.Post,new { id = "myform"}))
+           {
+       <p>Email</p>
+    <input type="text" class="email" name="email" placeholder="Email"  />
+  <p>Password</p>
+  <input type="password" class="password" name="Password" placeholder="Password"  />
+
+<input type="search" />
+   <input type="submit" id="btn" value="Sign In">
+           }
+     <script>
+         
+     </script>
+                                  
+</body>
+</html>
+
+
+====Login1 View=========
+
+@model SimpleLogin.Models.Class1
+<h4>Welcome : =>  @ViewBag.My</h4>
+<h4>Your Password => @ViewBag.M</h4>
+<h3>@TempData["b"]</h3>
+<h3>@ViewBag.a</h3>
+<table border="1" align="center" cellspacing="pixels" frame="above">
+    <tr>
+       <td><h4>@Html.Label("Your Name :") </h4></td> 
+        <td>@ViewBag.My</td>
+    </tr>
+    <tr>
+        <td><h4>@Html.Label("Your Password :")</h4>
+</td>
+        <td> @ViewBag.M</td>
+    </tr>
+</table>
+
+
+======================partial view============
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace MvcApplication5.Controllers
+{
+    public class HomeController : Controller
+    {
+        //
+        // GET: /Home/
+       
+        public ActionResult Index()
+        {
+           ViewBag.a = 10;
+            return View("Index");
+        }
+
+    }
+}
+
+
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<h2>@ViewBag.a</h2>
+<h2>@Html.Partial("Partial1")</h2>
+
+======partial1 view====
+<h2>Hii From Partial View</h2>
+
+
+
+
+======================================JQuery form VaLIDATion========
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using MvcApplication4.Models;
+namespace MvcApplication4.Controllers
+{
+    public class HomeController : Controller
+    {
+        //
+        // GET: /Home/
+        [HttpGet]
+        public ActionResult Index()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Index11(string abc)
+        {
+            Class1 obj = new Class1();
+            obj.Name = abc;
+            return View(obj);
+
+        }
+    }
+}
+
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@model MvcApplication4.Models.Class1
+
+<head><title></title>
+<script src ="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+</head>
+
+
+
+@using (Html.BeginForm("Index11", "Home",FormMethod.Post , new { id = "myform"})){
+
+    <table>
+        
+        <tr>
+            <td>Name: - </td>
+            <td><input type="text" name ="abc" id ="abc"  /></td>
+            
+        <tr>
+            <td><input type ="submit"  value="Submit" class ="a"/></td>
+        </tr>
+                     
+    </table>
+}
+<script>
+    $(document).ready(function () {
+        $("#myform").validate({
+            rules: {
+                abc: {
+                    required: true,
+
+                }
+            }
+            });
+    
+        });
+    
+</script>
+
+
+
+
+@{
+    ViewBag.Title = "Index1";
+}
+
+<h2>Index1</h2>
+@model MvcApplication4.Models.Class1
+
+<div>
+    <h1>Welcome:-@Model.Name</h1>
+</div>
+
+
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace MvcApplication4.Models
+{
+    public class Class1
+    {
+       
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public string LastName { get; set; }
+       
+    }
+}
+
+
+=====================================Ajax post form============
+
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using MvcApplication3.Models;
+namespace MvcApplication3.Controllers
+{
+    public class HomeController : Controller
+    {
+        //
+        // GET: /Home/
+        [HttpGet]
+        public ActionResult Index()
+        {
+
+
+            List<Student> emp;
+            emp = new List<Student>()
+                {
+                    new Student()
+                    {Id =1 ,Name ="Rashid" , LastName="Khan" },
+                    new Student()
+                    {Id = 2,Name ="Royster" , LastName="D'Silva"},
+                   
+
+            };
+            TempData["MyData"] = emp;
+            return View(emp[1]);
+        }
+        [HttpPost]
+        public ActionResult Index(Student s)
+        {
+
+
+            // throw new Exception("Test");
+
+            return View();
+        }
+        [HttpGet]
+        public ActionResult Index1()
+        {
+            List<Student> emp;
+            emp = new List<Student>();
+            emp = (List<Student>)TempData["MyData"];
+
+
+            return View(emp);
+
+
+        }
+        
+        }
+    }
+
+
+
+@{
+    ViewBag.Title = "Index";
+}
+<head>
+<script src ="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
+    <script src="~/Scripts/jquery.form.min.js"></script>
+</head>
+<h2>Index</h2>
+@model MvcApplication3.Models.Student
+
+@using (Html.BeginForm("Index", "Home",FormMethod.Post)){
+
+    <table>
+        
+        <tr>
+            <td>Id: - </td>
+            <td>@Html.TextBoxFor(m=>m.Id)</td>
+            <tr>
+            <td>Name :-</td>
+            <td>@Html.TextBoxFor(m=>m.Name)</td>
+                </tr>
+            <tr>
+            <td>Last Name:- </td>
+            <td>@Html.TextBoxFor(m=>m.LastName)</td>
+        </tr>
+        <tr>
+
+
+        </tr>
+        <tr>
+            <td><input type ="submit"  value="Save" class ="a" /></td>
+        </tr>
+            
+        
+            
+        
+    </table>
+}
+<input type ="button" value="View All Students" class="b"  />
+<script>
+    $(document).ready(function () {
+        $(".a").click(function () {
+            //var employeeid = $(this).closest("tr").find("td").eq(0).text();
+            //alert("Employee Id    " + employeeid);
+            //$(this).after('<input type="text" id="c">');
+
+            //    $.ajax(
+            //        {
+            //            url: 'Home/GetData',
+            //            type: 'GET',
+            //            data: { id1: 9878 },
+            //            success: function (d) {
+            //                alert("Success " + d);
+            //            },
+            //            error: function (e) {
+            //                alert("Error111 " + e);
+            //            }
+            //        })
+            //});
+
+
+            $("form").ajaxForm({
+                success: function (d) {
+                    alert("Ajaxsuccess"+d);
+
+                }, error: function (e) {
+                    alert("ajaxsuccess error"+e);
+                }
+            });
+        });})
+</script>
+<script>
+    $(document).ready(function () {
+        $(".b").click(function () {
+            //var employeeid = $(this).closest("tr").find("td").eq(0).text();
+            //alert("Employee Id    " + employeeid);
+            //$(this).after('<input type="text" id="c">');
+            var newUrl = '@Url.Action("Index1","Home")';
+            $.ajax(
+                {
+                    
+                    method: 'POST',
+                  //  url: "Home/Index1",
+                    
+                    data: { id1: 9878 },
+                    success: function (d) {
+                        alert("Success 11111"+d);
+                        window.location.href = newUrl;
+                    },
+                    error: function (e) {
+                        alert("Error111 " + e);
+                    }
+                })
+        });})
+            </script>
+@*onclick="location.href = 'http://localhost:55689/Home/Index1'"*@
+
+
+
+
+
+
+
+@{
+    ViewBag.Title = "Index1";
+}
+
+<h2>Index1</h2>
+
+@model IEnumerable<MvcApplication3.Models.Student>
+
+<table border ="1" >
+    <thead>
+    <tr>
+        <th>Student Id</th>
+        <th>Student Name</th>
+        <th>Student LastName</th>
+        
+    </tr>
+        </thead>
+    <tbody>
+       
+    @foreach (var a in Model)
+    {
+        <tr>
+            <td>@a.Id</td>
+            <td>@a.Name </td>
+            <td>@a.LastName</td>
+            
+           
+        </tr>
+
+         
+    }
+        </tbody>
+    </table>
+
+
+
+========2nd controller============
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace MvcApplication3.Controllers
+{
+    public class Home1Controller : Controller
+    {
+        //
+        // GET: /Home1/
+        [HttpGet]
+        public ActionResult Index(string text1)
+        {
+
+
+            return View(text1);
+
+        }
+        [HttpGet]
+        public ActionResult Index2(string text1)
+        {
+
+
+            return View(text1);
+
+        }
+       // [HttpPost]
+        //public ActionResult Index2(string text1)
+        //{
+
+
+        //    return View(text1);
+
+        //}
+        
+        
+   }
+}
+
+
+
+======Index view
+
+<head>
+<script src ="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
+    <script src="~/Scripts/jquery.form.min.js"></script></head>
+
+<input type ="Text" id="text1" name="text1" onclick="'http://localhost:55689/home1/Index2'";/></br></br>
+<input type="submit" value="Text Value" class ="a"   />
+ 
+<h2></h2>
+
+<script>
+  $(document).ready (function(){
+        $(".a").click(function () {
+            alert(text1.value);
+            
+            
+        })
+    });
+</script>
+
+<h2>@ViewBag.view</h2>
+
+
+
+
+
+
+@{
+    ViewBag.Title = "Index2";
+}
+
+<h2>Index2</h2>
+<h2></h2>
+
+
+
+===============================Dom manupulation======================
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+//Added Library
+using MvcApplication1.Models;
+namespace MvcApplication1.Controllers
+{
+    public class HomeController : Controller
+    {
+        //
+        // GET: /Home/
+        //private List<Employee> emp;
+       
+        public ActionResult Index()
+        {
+              List<Employee> emp;
+                emp = new List<Employee>()
+                {
+                    new Employee()
+                    {EmployeeId =1 ,EmployeeName ="Rashid" , EmployeeDesignation="A3" },
+
+                    new Employee()
+                     {EmployeeId =2 ,EmployeeName ="Royston" , EmployeeDesignation="B2" },
+                     new Employee()
+                      {EmployeeId =3 ,EmployeeName ="Rahul" , EmployeeDesignation="B1" },
+
+            };
+                //if (id != null)
+                //{
+                //    int iddd = Convert.ToInt32(id);
+                //    emp.RemoveAt(iddd - 1);
+                
+                //}
+
+                //return View(emp);
+          
+              
+      
+            return View(emp[0]);
+        }
+
+        [HttpPost]
+        
+        public ActionResult Index(Employee e)
+        {
+            
+            ViewBag.Id= e.EmployeeId;
+            ViewBag.Name = e.EmployeeName;
+            ViewBag.Designation = e.EmployeeDesignation;
+            return View(e);
+        }
+
+        [HttpGet]
+        public ActionResult GetData(int id1)
+        {
+           // throw new Exception("test exp");
+           // try{//web serivce alling
+            //return Json(true, JsonRequestBehavior.AllowGet);
+            return View(true);
+        }
+        [HttpPost]
+        public ActionResult Data(Employee e)
+        {
+          //  throw new Exception("TEST");
+            return Json(true,JsonRequestBehavior.AllowGet);
+           // throw new Exception("TEST");
+        }
+    }
+}
+
+
+
+
+
+
+
+
+<h2>Index</h2>
+<head>
+<script src ="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
+    <script src="~/Scripts/jquery.form.min.js"></script>
+</head>
+
+@*@model IEnumerable<MvcApplication1.Models.Employee>*@
+@*@{
+    ViewBag.Title = "Index";
+}*@
+
+@model MvcApplication1.Models.Employee
+@using (Html.BeginForm("Data", "Home", FormMethod.Post))
+{
+  <table>
+
+      <tr>
+          <td>Emp Id:</td>
+          <td>@Html.TextBoxFor(m=>m.EmployeeId)</td>
+      </tr>
+      <tr>
+          <td>Emp Name:</td>
+          <td>@Html.TextBoxFor(m=>m.EmployeeName)</td>
+      </tr>
+      <tr>
+          <td>Emp Designation:</td>
+          <td>@Html.TextBoxFor(m=>m.EmployeeDesignation)</td>
+      </tr>
+      <tr>
+          <td colspan="2" ><input type ="submit" value="Save" /></td>
+          <td colspan="2" ><input type ="button" value="Save2" /></td>
+      </tr>
+      <tr>
+          <td><b> Id:</b>@ViewBag.Id</td>
+          
+      </tr>
+      <tr>
+          <td><b> Name:</b>@ViewBag.Name</td>
+          
+      </tr>
+      <tr>
+          <td><b> Id:</b>@ViewBag.Designation</td>
+          
+      </tr>
+  </table>
+    
+   }
+
+
+
+
+
+<div>
+   <b> Employee Data</b>
+    <br />
+
+</div>
+
+@*<table border ="1" >
+    <thead>
+    <tr>
+        <th>Emp Id</th>
+        <th>Emp Name</th>
+        <th>Emp Designation</th>
+        <th>Edit And Delete</th>
+    </tr>
+        </thead>
+    <tbody>
+    @foreach (var a in Model)
+    {
+        <tr>
+            <td>@a.EmployeeId</td>
+            <td>@a.EmployeeName </td>
+            <td>@a.EmployeeDesignation</td>
+            
+           <td>
+                <button class ="a" type ="submit" onclick="myFunction()">Edit</button>
+                <button class ="b" type ="submit">Delete</button>
+            </td>
+        </tr>
+
+         
+    }
+        </tbody>
+    </table>*@
+
+   @* <script>
+        $(document).ready(function () {
+            $('table').DataTable({ "fnCreatedRow": function (nRow) { alert($(nRow).text()); } })
+        });
+    </script>*@
+    <script>
+        function myFunction() {
+         //   var x = document.getElementById("myDIV");
+           // if (x.style.display === "none") {
+           //     x.style.display = "block";
+           // } else {
+            //    x.style.display = "none";
+            // }
+            
+        }
+    </script>
+<script>
+    $(document).ready(function () {
+        $(".a").click(function () {
+            //var employeeid = $(this).closest("tr").find("td").eq(0).text();
+            //alert("Employee Id    " + employeeid);
+            //$(this).after('<input type="text" id="c">');
+
+                //$.ajax(
+                //    {
+                //        url: 'Home/GetData',
+                //        type: 'GET',
+                //        data: { id1: 9878 },
+                //        success: function (d) {
+                //            alert("Success " + d);
+                //        },
+                //        error: function (e) {
+                //            alert("Error111 " + e);
+                //        }
+                //    })
+            });
+
+
+            $("form").ajaxForm({
+                success: function (d) {
+                    alert("Ajaxsuccess");
+
+                }, error: function (e) {
+                    alert("ajaxsuccess error");
+                }
+            });
+        });
+</script>
+  <script>
+      /*  $(document).ready(function(){
+            $('.b').click(function () {
+                $(this).parents("tr").remove();
+           
+           // $(this).closest("tr").remove();
+            });
+        });
+        */
+    </script> 
+
+
+
+
+@{
+    ViewBag.Title = "Index1";
+}
+
+<h2>Index1</h2>
+@model MvcApplication1.Models.Employee
+@using (Html.BeginForm("Index1", "Home", FormMethod.Post))
+{
+  <table>
+
+      <tr>
+          <td>Emp Id:</td>
+          <td>@Html.TextBoxFor(m=>m.EmployeeId)</td>
+      </tr>
+      <tr>
+          <td>Emp Name:</td>
+          <td>@Html.TextBoxFor(m=>m.EmployeeName)</td>
+      </tr>
+      <tr>
+          <td>Emp Designation:</td>
+          <td>@Html.TextBoxFor(m=>m.EmployeeDesignation)</td>
+      </tr>
+      <tr>
+          <td colspan="2" ><input type ="submit" value="Save" /></td>
+          <td colspan="2" ><input type ="button" value="Save2" /></td>
+      </tr>
+      <tr>
+          <td><b> Id:</b>@ViewBag.Id</td>
+          
+      </tr>
+      <tr>
+          <td><b> Name:</b>@ViewBag.Name</td>
+          
+      </tr>
+      <tr>
+          <td><b> Id:</b>@ViewBag.Designation</td>
+          
+      </tr>
+  </table>
+    <script>
+        $(document).ready(function () {
+            $(".a").click(function () {
+                $("form").ajaxForm({
+                    success: function (d) {
+                        alert("Ajaxsuccess");
+
+                    }, error: function (e) {
+                        alert("ajaxsuccess error");
+                    }
+                });
+            });
+        })
+    </script>
+   }
+
+
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace MvcApplication1.Models
+{
+    public class Employee
+    {
+        public int EmployeeId { get; set; }
+        public string EmployeeName { get; set; }
+        public string EmployeeDesignation { get; set; }
+    }
+}
+
+
+
+
+
+=========================================Dependecy Injection=====================
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using DL;
+namespace DependencyInjection.Controllers
+{
+    public class HomeController : Controller
+    {
+       private IEmployee emp = null;
+       private IExtra ex = null;
+
+       public HomeController(IEmployee employee, IExtra ext)
+       {
+           emp = employee;
+           ex = ext;
+       }
+
+        public ActionResult Index()
+        {
+            int count = emp.countemployee();
+            int ct = ex.abc();
+            ViewBag.ct = ct;
+            ViewBag.count = count;
+            return View();
+        }
+
+    }
+}
+====refer pic============
+
+
+
+
+$(document).ready(function(){
+  $("form").submit(function(){
+    var r = confirm("are you sure you want to login?")
+ if (r==true){alert("OK");}else{Response.redirect("http://localhost:55333/Home/Index");}  });
+});
+
+
+
+======================================================================webgrid=========================
+
+
+
+
+
+======================Home Controller===========================
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using OSMVC.Models;
+namespace OSMVC.Controllers
+{
+    public class HomeController : Controller
+    {
+        //
+        // GET: /Home/
+        List<Name> name = new List<Name>();
+        
+        public ActionResult Index()
+        {
+            
+            name.Add(new Name() { firstname = "Rashid", lastname = "Khan" });
+            name.Add(new Name() { firstname = "Royston", lastname = "D'Silva" });
+            name.Add(new Name() { firstname = "Hitesh", lastname = "Chaudhari" });
+            name.Add(new Name() { firstname = "Mohsin", lastname = "Khan" });
+            name.Add(new Name() { firstname = "Apoorva", lastname = "Verma" });
+            name.Add(new Name() { firstname = "Shailesh", lastname = "Chaudhari" });
+            name.Add(new Name() { firstname = "Rahul", lastname = "Gupta" });
+
+            return View(name);
+        }
+
+    }
+}
+====================================Index View=================================================
+@model IEnumerable<OSMVC.Models.Name>
+@{
+    ViewBag.Title = "Index";
+}
+@*@model IEnumerable<OSMVC.Models.Name>*@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+
+ <p>Here's the list of Environment. Select any one:</p>
+      <form><div class="span6">
+          <label><b>Select Environment:-</b></label>
+         <select id="ddList" name = "dropdown">
+             <option></option>
+            <option value = "Development">Development</option>
+            <option value = "Stage">Stage</option>
+            <option value = "Production">Production</option>
+         </select>
+          <br />
+          <br />
+          <br />
+        </div>
+
+          <p class="input-group">
+               <div  class="col-xs-2"> <input  type ="search" id="txtSearch" class="form-control" placeholder="search for table..."/></div>
+            <div class="btn-toolbar">  <input type="button" id="btnSearch"  class="btn btn-primary" value="Search" />
+             
+              <input type="button" id="btnClear" class="btn btn-danger" value="Clear"/></div>
+            </p>
+           
+                    </form>
+
+
+        <script>
+        $(document).ready(function(){
+            $("#btnClear").click(function () {
+                $("#txtSearch").val('');
+                $("#ddList").val('');
+            });
+            $('#btnSearch').click(function () {
+                if ($('#txtSearch').val() == "") {
+                    alert('Enter Text to Search');                 
+                    $("#txtSearch").focus();
+    
+                }
+                else if ($('#ddList').val() == "") {
+                    alert('Please select Environment');
+                    $("#ddList").focus();
+
+                }
+                else {
+
+                    var value = $("#txtSearch").val().toLowerCase();
+                    $("#grid tr").filter(function () {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                }
+                
+            });
+           
+                
+            });
+      
+
+</script><br /><br />
+@*@if (Model == null)
+{
+    WebGrid grid = new WebGrid(new List<object>(), rowsPerPage: 3);
+    <div>
+        @grid.GetHtml(
+            tableStyle: "table", // applying style on grid
+            fillEmptyRows: true,
+            //show empty row when there is only one record on page to it will display all empty rows there.
+            headerStyle: "header", //applying style.
+            footerStyle: "grid-footer", //applying style.
+            mode: WebGridPagerModes.All, //paging to grid
+            columns: new[]  // colums in grid
+            {
+            grid.Column("First Name"), //the model fields to display
+            grid.Column("Last Name"),
+          
+          
+            })*@
+
+
+
+@{        
+   
+   var grid = new WebGrid(source: Model,
+                defaultSort: "firstname",
+                rowsPerPage: 1000000);
+}
+<p>
+<h2>Employee List</h2>
+<div id="grid">
+    @grid.GetHtml(
+        tableStyle: "table",
+        headerStyle: "header",
+        alternatingRowStyle: "alt",
+        columns: grid.Columns(
+            grid.Column("firstname"),
+          
+            grid.Column("lastname")
+        )
+    )
+</div>
+</p>
+</div>
+    </div>
+
+<style type="text/css">
+    .table {
+       
+        margin: 4px;
+        border-collapse: collapse;
+        width: 300px;
+    }
+
+    .header {
+        background-color: gray;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    .table th, .table td {
+        border: 1px solid black;
+        padding: 5px;
+    }
+   
+    .webGrid { margin: 4px; border-collapse: collapse; width: 500px;  background-color:#B4CFC3;}
+    .header { background-color: #C1D4E6; font-weight: bold; color: #FFF; }
+    .webGrid th, .webGrid td { border: 1px solid #C0C0C0; padding: 5px; }
+    .alt { background-color: #E4E9F5; color: #000; }
+    .gridHead a:hover {text-decoration:underline;}
+    .description { width:auto}
+    .select{background-color: #71857C}
+
+</style>
+
+
+========================================Name Model=================================
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace OSMVC.Models
+{
+    public class Name
+    {
+        
+        public string firstname { get; set; }
+        public string lastname { get; set; }
+    }
+}
